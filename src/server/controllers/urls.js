@@ -1,4 +1,4 @@
-const { shortenUrl, getUrls } = require('../services')
+const { shortenUrl, getUrls, getRedirectUrl } = require('../services')
 
 const getShortenedUrl = (req, res) => {
   try {
@@ -19,7 +19,23 @@ const fetchUrls = (req, res) => {
   }
 }
 
+const fetchUrl = (req, res) => {
+  try {
+    const path = req.protocol + '://' + req.get('host') + req.originalUrl
+    const redirectUrl = getRedirectUrl(path)
+
+    if (redirectUrl) {
+      return res.status(301).redirect(redirectUrl)
+    }
+
+    return res.status(404).json({ error: 'URL does not exist' })
+  } catch (e) {
+    res.status(500).json({ error: e })
+  }
+}
+
 module.exports = {
   getShortenedUrl,
   fetchUrls,
+  fetchUrl,
 }

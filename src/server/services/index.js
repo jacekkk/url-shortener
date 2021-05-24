@@ -1,6 +1,7 @@
-const { shortenUrl, getUrls } = require('./urls')
+const { shortenUrl, getUrls, getRedirectUrl } = require('./urls')
 
 module.exports = {
   shortenUrl,
   getUrls,
+  getRedirectUrl,
 }

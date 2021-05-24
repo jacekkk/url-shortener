@@ -1,11 +1,11 @@
 const fs = require('fs')
 
 const shortenUrl = (url, host) => {
-  const timestamp = Date.now()
+  const shortUrl = `${host}/api/${Date.now()}`
 
   const mappedUrl = {
     originalUrl: url,
-    shortUrl: `${host}/${timestamp}`,
+    shortUrl,
   }
 
   fs.readFile('data/urls.json', 'utf8', (err, fileContent) => {
@@ -27,7 +27,7 @@ const shortenUrl = (url, host) => {
     }
   })
 
-  return timestamp
+  return shortUrl
 }
 
 const getUrls = () => {
@@ -39,7 +39,21 @@ const getUrls = () => {
   }
 }
 
+const getRedirectUrl = (path) => {
+  try {
+    const rawData = fs.readFileSync('data/urls.json', 'utf8')
+    const parsedData = JSON.parse(rawData)
+
+    const redirectUrl = parsedData.find((urlMap) => urlMap.shortUrl === path)
+
+    return redirectUrl.originalUrl
+  } catch (e) {
+    throw new Error('failed to read URLs from data/urls.json')
+  }
+}
+
 module.exports = {
   shortenUrl,
   getUrls,
+  getRedirectUrl,
 }

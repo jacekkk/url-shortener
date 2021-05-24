@@ -62,7 +62,7 @@ const UrlShortener = () => {
           target="_blank"
           rel="noreferrer"
         >
-          {window.location.host}/{shortUrl}
+          {shortUrl}
         </Link>
       </Typography>
       <Box component="span" display="block">
