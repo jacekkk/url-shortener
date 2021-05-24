@@ -1,5 +1,6 @@
-const { getShortenedUrl } = require('./urls')
+const { getShortenedUrl, fetchUrls } = require('./urls')
 
 module.exports = {
   getShortenedUrl,
+  fetchUrls,
 }
